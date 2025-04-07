@@ -13,7 +13,10 @@ COPY ["Bar-scan-API/Bar-scan-API.csproj", "Bar-scan-API/"]
 RUN dotnet restore "./Bar-scan-API/Bar-scan-API.csproj"
 COPY . .
 WORKDIR "/src/Bar-scan-API"
+RUN dotnet tool install --global dotnet-ef 
+ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet build "./Bar-scan-API.csproj" -c $BUILD_CONFIGURATION -o /app/build
+CMD dotnet ef database update --environment Development --project src/project_Repositories
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
