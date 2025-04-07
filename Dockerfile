@@ -13,10 +13,10 @@ COPY ["bar-scan-api.csproj", "."]
 RUN dotnet restore "./bar-scan-api.csproj"
 COPY . .
 WORKDIR "/src/."
-RUN dotnet tool install --global dotnet-ef 
-ENV PATH="$PATH:/root/.dotnet/tools"
+# RUN dotnet tool install --global dotnet-ef 
+# ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet build "./bar-scan-api.csproj" -c $BUILD_CONFIGURATION -o /app/build
-CMD dotnet ef database update --environment Development --project src/project_Repositories
+# CMD dotnet ef database update --environment Development --project src/project_Repositories
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
