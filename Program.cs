@@ -16,7 +16,9 @@ builder.Services.AddCors(options =>
                       {
                           policy.WithOrigins("http://bar-scan.juuls-trinkets.com",
                                               "https://www.bar-scan.juuls-trinkets.com",
-                                              "http://localhost:3000/");
+                                              "http://localhost:3000/",
+                                              "http://192.168.1.38:3637",
+                                              "https://192.168.1.38:3637");
                       });
 });
 

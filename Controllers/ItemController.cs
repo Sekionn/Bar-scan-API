@@ -1,4 +1,5 @@
-﻿using Bar_scan_API.Context;
+﻿using bar_scan_api.Models;
+using Bar_scan_API.Context;
 using Bar_scan_API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -81,9 +82,9 @@ namespace Bar_scan_API.Controllers
         // POST: api/Items
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Item>> CreateItem(Item item)
+        public async Task<ActionResult<Item>> CreateItem(ItemCreationDTO itemDto)
         {
-            item.Date = DateTime.UtcNow;
+            var item = itemDto.CreateItem();
             _context.Items.Add(item);
             await _context.SaveChangesAsync();
 
