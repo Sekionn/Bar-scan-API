@@ -91,6 +91,25 @@ namespace Bar_scan_API.Controllers
             return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
         }
 
+        // POST: api/Items/multiple
+        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [HttpPost("multiple")]
+        public async Task<ActionResult<Item>> CreateItems(MultipleItemCreationDTO itemDto)
+        {
+            List<Item> savedItems = new List<Item>(); 
+            foreach (var item in itemDto.Items)
+            {
+                var tempItem = item.CreateItem();
+                _context.Items.Add(tempItem);
+                savedItems.Append(tempItem);
+            }
+
+            
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction(nameof(GetItem), new { ids = savedItems.Select(i => i.Id).ToArray() }, savedItems.Count);
+        }
+
         // DELETE: api/Items/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
