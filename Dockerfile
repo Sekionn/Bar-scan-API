@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
-EXPOSE 443
+EXPOSE 5229
 
 #ENV ASPNETCORE_URLS=https://+:5229
 
