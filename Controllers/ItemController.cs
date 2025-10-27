@@ -96,18 +96,14 @@ namespace Bar_scan_API.Controllers
         [HttpPost("multiple")]
         public async Task<ActionResult<Item>> CreateItems(MultipleItemCreationDTO itemDto)
         {
-            List<Item> savedItems = new List<Item>(); 
             foreach (var item in itemDto.Items)
             {
-                var tempItem = item.CreateItem();
-                _context.Items.Add(tempItem);
-                savedItems.Append(tempItem);
+                _context.Items.Add(item.CreateItem());
             }
 
-            
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetItem), new { ids = savedItems.Select(i => i.Id).ToArray() }, savedItems.Count);
+            return CreatedAtAction(nameof(GetItem), true);
         }
 
         // DELETE: api/Items/5
